@@ -14,13 +14,13 @@ public class StickCollision : MonoBehaviour
     Rigidbody rb;
     [SerializeField]
     GameObject tapeModelPrefab;
-    LivesManager livesManager;
 
+    LivesManager livesManager;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        livesManager = GetComponent<LivesManager>();
+        livesManager - GetComponent<LivesManager>();
         SetSpawnPoint(); //Can disable this if we want the start to be somewhere other than where the player is originally positioned in the scene.
     }
 
@@ -91,6 +91,5 @@ public class StickCollision : MonoBehaviour
         {
             GetComponent<AirplaneFlight>().ResetPitchAngle();
         }
-        
     }
 }
