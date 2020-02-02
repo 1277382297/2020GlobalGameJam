@@ -18,6 +18,8 @@ public class AirplaneFlight : MonoBehaviour
     [SerializeField]
     float initialPitchAngle;
 
+    public int inverseControlsModifierVertical = 1;
+
     Vector3 newPosition;
     Rigidbody rb;
     StickCollision stickCollision;
@@ -36,6 +38,11 @@ public class AirplaneFlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            inverseControlsModifierVertical = inverseControlsModifierVertical * -1;
+        }
+
         if (stickCollision.stuck == false)
         {
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
@@ -48,18 +55,20 @@ public class AirplaneFlight : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
             {
-                if ((currentPitchAngle + (turnSpeed * Time.deltaTime)) <= upwardPitchMax)
+                float projectedAngle = (currentPitchAngle + (turnSpeed * Time.deltaTime * inverseControlsModifierVertical));
+                if (projectedAngle <= upwardPitchMax && projectedAngle >= downwardPitchMax)
                 {
-                    transform.Rotate(turnSpeed * Time.deltaTime, 0, 0, Space.Self);
-                    currentPitchAngle += (turnSpeed * Time.deltaTime);
+                    transform.Rotate(turnSpeed * Time.deltaTime * inverseControlsModifierVertical, 0, 0, Space.Self);
+                    currentPitchAngle += (turnSpeed * Time.deltaTime * inverseControlsModifierVertical);
                 }
             }
             else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
-                if ((currentPitchAngle - (turnSpeed * Time.deltaTime)) >= downwardPitchMax)
+                float projectedAngle = (currentPitchAngle - (turnSpeed * Time.deltaTime * inverseControlsModifierVertical));
+                if (projectedAngle >= downwardPitchMax && projectedAngle <= upwardPitchMax)
                 {
-                    transform.Rotate(-1 * turnSpeed * Time.deltaTime, 0, 0, Space.Self);
-                    currentPitchAngle -= (turnSpeed * Time.deltaTime);
+                    transform.Rotate(-1 * turnSpeed * Time.deltaTime * inverseControlsModifierVertical, 0, 0, Space.Self);
+                    currentPitchAngle -= (turnSpeed * Time.deltaTime * inverseControlsModifierVertical);
                 }
             }
             //Maybe at some point we need to figure out how to replace this with a velocity or force, but we can cross that bridge when we come to it.
