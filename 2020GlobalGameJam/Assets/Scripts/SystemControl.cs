@@ -52,17 +52,17 @@ public class SystemControl : MonoBehaviour
         }
     }
 
-    void CutTape(float length)
+    public void CutTape(float length)
     {
         totaltapelength -= length;
     }
 
-    void changescore(int change)
+    public void changescore(int change)
     {
         score += change;
     }
 
-    void SticktoObj(string Objname)
+    public void SticktoObj(string Objname)
     {
         //add to response at the end when sticking
         if (responsesearch.ContainsKey(Objname))
@@ -75,7 +75,7 @@ public class SystemControl : MonoBehaviour
 		}
     }
 
-    List<string> GetResponses()
+    public List<string> GetResponses()
 	{
         return EndResponseList;
 	}
