@@ -7,7 +7,7 @@ public class LivesManager : MonoBehaviour
     [SerializeField]
     int maxLives = 7;
 
-    int currentLives = 999;
+    public int currentLives = 999;
     SystemControl theSystemController;
 
     // Start is called before the first frame update
