@@ -9,11 +9,20 @@ public class StickCollision : MonoBehaviour
     public float spawnX = 0;
     public float spawnY = 0;
     public float spawnZ = 0;
-    public bool readyToStick = true;
-    public bool stuck = false;
+    [SerializeField]
+    float spawnRotationX = 0;
+    [SerializeField]
+    float spawnRotationY = 0;
+    [SerializeField]
+    float spawnRotationZ = 0;
+
+    public bool readyToStick = false;
+    public bool stuck = true;
+    public bool readyToUnstick = true;
     Rigidbody rb;
     [SerializeField]
     GameObject tapeModelPrefab;
+    
 
     LivesManager livesManager;
     // Start is called before the first frame update
@@ -59,6 +68,7 @@ public class StickCollision : MonoBehaviour
     {
         readyToStick = false;
         stuck = true;
+        readyToUnstick = false;
         rb.velocity = new Vector3(0, 0, 0);
         rb.angularVelocity = new Vector3(0, 0, 0);
         //Do any turning that needs to happen.
@@ -83,13 +93,15 @@ public class StickCollision : MonoBehaviour
         }
         transform.position = new Vector3(spawnX, spawnY, spawnZ);
         readyToStick = true;
-        stuck = false;
+        //stuck = false;
         rb.velocity = new Vector3(0, 0, 0);
         rb.angularVelocity = new Vector3(0, 0, 0);
         transform.rotation = Quaternion.identity;
+        transform.Rotate(spawnRotationX, spawnRotationY, spawnRotationZ);
         if (GetComponent<AirplaneFlight>() != null)
         {
             GetComponent<AirplaneFlight>().ResetPitchAngle();
         }
+        readyToUnstick = true;
     }
 }

@@ -28,6 +28,14 @@ public class Flap : MonoBehaviour
             {
                 rb.AddRelativeForce(0, flapForce, 0, ForceMode.Impulse);
             }
+        } else if (stickCollision.readyToUnstick == true)
+        {
+            if (Input.GetKeyDown(flapKey))
+            {
+                stickCollision.stuck = false;
+                stickCollision.readyToUnstick = false;
+                rb.AddRelativeForce(0, flapForce, 0, ForceMode.Impulse);
+            }
         }
         
     }
