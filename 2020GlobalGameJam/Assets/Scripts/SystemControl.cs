@@ -20,11 +20,11 @@ public class SystemControl : MonoBehaviour
     private nametoobj[] responselist;
     //values
     int score = 0;
-    public float totaltapelength;
     public Text resdialog;
     public string goodtext;
     public string badtext;
     public string neutraltext;
+    //manual button to end the game
     public Button endgame;
     public Button restart;
     Dictionary<string, string> responsesearch;
@@ -59,13 +59,8 @@ public class SystemControl : MonoBehaviour
         {
             displaystarted = false;
             restart.gameObject.SetActive(false);
-            SticktoObj("Certificate");
             SticktoObj("Hole");
-            changescore(1);
-            if (totaltapelength <= 0)
-            {
-                gameend = true;
-            }
+            SticktoObj("Certificate");
         }
         else if(!displaystarted)
         {
@@ -82,7 +77,7 @@ public class SystemControl : MonoBehaviour
 
     void endGameclick()
 	{
-        gameend = true;
+        endgame();
 	}
 
     IEnumerator displayresponse()
@@ -94,6 +89,7 @@ public class SystemControl : MonoBehaviour
             resdialog.text = res;
             yield return wait;
         }
+        yield return wait;
         if (score > 0)
 		{
             resdialog.text = goodtext;
@@ -109,11 +105,10 @@ public class SystemControl : MonoBehaviour
         restart.gameObject.SetActive(true);
 	}
 
-    //removes tape length
-    public void CutTape(float length)
-    {
-        totaltapelength -= length;
-    }
+    public void finishgame()
+	{
+        gameend = true;
+	}
 
     public void changescore(int change)
     {
