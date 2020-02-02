@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-
-
+using UnityEngine.SceneManagement;
 
 public class SystemControl : MonoBehaviour
 {
@@ -20,12 +19,13 @@ public class SystemControl : MonoBehaviour
     private nametoobj[] responselist;
     //values
     int score = 0;
-    public float totaltapelength;
     public Text resdialog;
     public string goodtext;
     public string badtext;
     public string neutraltext;
-    public Button endgame;
+    public string scenename;
+
+    //manual button to end the game
     public Button restart;
     Dictionary<string, string> responsesearch;
     List<string> EndResponseList;
@@ -42,11 +42,8 @@ public class SystemControl : MonoBehaviour
         }
         //restart button click
         restart.onClick.AddListener(restartClick);
-        //endgame button
-        endgame.onClick.AddListener(endGameclick);
         //enable and disable buttons
         restart.gameObject.SetActive(false);
-        endgame.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -55,28 +52,19 @@ public class SystemControl : MonoBehaviour
         //normal game loop
         if(!gameend)
         {
-            restart.gameObject.SetActive(false);
-            SticktoObj("Certificate");
-            SticktoObj("Hole");
-            changescore(1);
-            if (totaltapelength <= 0)
-            {
-                gameend = true;
-            }
+            
         }
-        StartCoroutine(displayresponse());
+        else
+        {
+            StartCoroutine(displayresponse());
+        }
     }
 
     void restartClick()
 	{
-        gameend = false;
+        SceneManager.LoadScene(scenename);
 	}
-
-    void endGameclick()
-	{
-        gameend = true;
-	}
-
+    
     IEnumerator displayresponse()
 	{
         foreach(string res in EndResponseList)
@@ -98,10 +86,10 @@ public class SystemControl : MonoBehaviour
 		}
         restart.gameObject.SetActive(true);
 	}
-
-    public void CutTape(float length)
+    
+    public void finishgame()
     {
-        totaltapelength -= length;
+        gameend = true;
     }
 
     public void changescore(int change)
