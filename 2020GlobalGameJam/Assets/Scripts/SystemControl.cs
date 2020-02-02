@@ -24,9 +24,12 @@ public class SystemControl : MonoBehaviour
     public string goodtext;
     public string badtext;
     public string neutraltext;
+
+
     //manual button to end the game
     public Button endgame;
     public Button restart;
+    public int totaltapelength;
     Dictionary<string, string> responsesearch;
     List<string> EndResponseList;
     Boolean gameend = false;
@@ -44,11 +47,8 @@ public class SystemControl : MonoBehaviour
         }
         //restart button click
         restart.onClick.AddListener(restartClick);
-        //endgame button
-        endgame.onClick.AddListener(endGameclick);
         //enable and disable buttons
         restart.gameObject.SetActive(false);
-        endgame.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -57,10 +57,7 @@ public class SystemControl : MonoBehaviour
         //normal game loop
         if (!gameend)
         {
-            displaystarted = false;
-            restart.gameObject.SetActive(false);
-            SticktoObj("Hole");
-            SticktoObj("Certificate");
+            
         }
         else if(!displaystarted)
         {
@@ -72,14 +69,12 @@ public class SystemControl : MonoBehaviour
 	{
         gameend = false;
         EndResponseList.Clear();
+        restart.gameObject.SetActive(false);
+        displaystarted = false;
         score = 0;
 	}
 
-    void endGameclick()
-	{
-        endgame();
-	}
-
+    //displays responses at the end of the game
     IEnumerator displayresponse()
 	{
         displaystarted = true;
@@ -89,7 +84,6 @@ public class SystemControl : MonoBehaviour
             resdialog.text = res;
             yield return wait;
         }
-        yield return wait;
         if (score > 0)
 		{
             resdialog.text = goodtext;
