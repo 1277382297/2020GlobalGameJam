@@ -20,7 +20,7 @@ public class StickCollision : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        livesManager - GetComponent<LivesManager>();
+        livesManager = GetComponent<LivesManager>();
         SetSpawnPoint(); //Can disable this if we want the start to be somewhere other than where the player is originally positioned in the scene.
     }
 
