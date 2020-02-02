@@ -597,6 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1315531251}
+  - component: {fileID: 1315531253}
   - component: {fileID: 1315531250}
   - component: {fileID: 1315531249}
   - component: {fileID: 1315531248}
@@ -640,7 +641,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 64
   m_CollisionDetection: 0
 --- !u!114 &1315531247
 MonoBehaviour:
@@ -757,6 +758,20 @@ MonoBehaviour:
   stuck: 0
   tapeModelPrefab: {fileID: 3011943894044790683, guid: 40d2714668a993242b13bcf27a322ee5,
     type: 3}
+--- !u!114 &1315531253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315531244}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5350c37797d7b429323ef8450638ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  rotateSpeed: 5
 --- !u!1 &1952685694
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +882,7 @@ GameObject:
   - component: {fileID: 2042842479}
   - component: {fileID: 2042842481}
   - component: {fileID: 2042842480}
+  - component: {fileID: 2042842482}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -939,3 +955,17 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2042842482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042842478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5350c37797d7b429323ef8450638ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1315531244}
+  rotateSpeed: 5
