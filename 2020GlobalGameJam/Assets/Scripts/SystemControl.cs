@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 
 
@@ -20,6 +21,12 @@ public class SystemControl : MonoBehaviour
     //values
     int score = 0;
     public float totaltapelength;
+    public Text resdialog;
+    public string goodtext;
+    public string badtext;
+    public string neutraltext;
+    public Button endgame;
+    public Button restart;
     Dictionary<string, string> responsesearch;
     List<string> EndResponseList;
     Boolean gameend = false;
@@ -33,6 +40,13 @@ public class SystemControl : MonoBehaviour
         {
             responsesearch.Add(responselist[x].objname, responselist[x].response);
         }
+        //restart button click
+        restart.onClick.AddListener(restartClick);
+        //endgame button
+        endgame.onClick.AddListener(endGameclick);
+        //enable and disable buttons
+        restart.gameObject.SetActive(false);
+        endgame.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -41,16 +55,49 @@ public class SystemControl : MonoBehaviour
         //normal game loop
         if(!gameend)
         {
+            restart.gameObject.SetActive(false);
+            SticktoObj("Certificate");
+            SticktoObj("Hole");
+            changescore(1);
             if (totaltapelength <= 0)
             {
                 gameend = true;
             }
         }
-        if (Input.GetButtonDown("F"))
-        {
-            gameend = false;
-        }
+        StartCoroutine(displayresponse());
     }
+
+    void restartClick()
+	{
+        gameend = false;
+	}
+
+    void endGameclick()
+	{
+        gameend = true;
+	}
+
+    IEnumerator displayresponse()
+	{
+        foreach(string res in EndResponseList)
+		{
+            resdialog.text = res;
+            yield return new WaitForSeconds(5);
+		}
+        if(score > 0)
+		{
+            resdialog.text = goodtext;
+		}
+        else if(score < 0)
+		{
+            resdialog.text = badtext;
+		}
+		else
+		{
+            resdialog.text = neutraltext;
+		}
+        restart.gameObject.SetActive(true);
+	}
 
     public void CutTape(float length)
     {
