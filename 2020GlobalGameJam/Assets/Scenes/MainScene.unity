@@ -1640,7 +1640,7 @@ GameObject:
   - component: {fileID: 593765092}
   - component: {fileID: 593765093}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1809,6 +1809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLives: 7
+  currentLives: 999
 --- !u!1 &639476200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,6 +3264,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3287,7 +3289,7 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.6981132, g: 1, b: 0.9869774, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3335,6 +3337,15 @@ Transform:
   m_Father: {fileID: 593765088}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &963194229
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 493bfb50af5d9424da505ba945c86600, type: 2}
 --- !u!1 &981907558
 GameObject:
   m_ObjectHideFlags: 0
@@ -5856,7 +5867,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 55251ee68ea3f394fa412d9db6ac8945,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.05
+      value: -7.47
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 55251ee68ea3f394fa412d9db6ac8945,
         type: 3}
