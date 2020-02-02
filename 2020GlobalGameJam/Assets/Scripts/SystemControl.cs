@@ -39,7 +39,7 @@ public class SystemControl : MonoBehaviour
     void Update()
     {
         //normal game loop
-        while (!gameend)
+        if(!gameend)
         {
             if (totaltapelength <= 0)
             {
