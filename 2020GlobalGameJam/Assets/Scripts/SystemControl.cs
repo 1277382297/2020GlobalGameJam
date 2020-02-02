@@ -20,71 +20,71 @@ public class SystemControl : MonoBehaviour
     private nametoobj[] responselist;
     //values
     int score = 0;
-    public float totaltapelength;
     public Text resdialog;
     public string goodtext;
     public string badtext;
     public string neutraltext;
+
+
+    //manual button to end the game
     public Button endgame;
     public Button restart;
+    public int totaltapelength;
     Dictionary<string, string> responsesearch;
     List<string> EndResponseList;
     Boolean gameend = false;
-
+    Boolean displaystarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
         //transferring array stuff to dictionary for easy lookup
+        responsesearch = new Dictionary<string, string>();
+        EndResponseList = new List<string>();
         for (int x = 0; x < responselist.Length; x++)
         {
             responsesearch.Add(responselist[x].objname, responselist[x].response);
         }
         //restart button click
         restart.onClick.AddListener(restartClick);
-        //endgame button
-        endgame.onClick.AddListener(endGameclick);
         //enable and disable buttons
         restart.gameObject.SetActive(false);
-        endgame.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
         //normal game loop
-        if(!gameend)
+        if (!gameend)
         {
-            restart.gameObject.SetActive(false);
-            SticktoObj("Certificate");
-            SticktoObj("Hole");
-            changescore(1);
-            if (totaltapelength <= 0)
-            {
-                gameend = true;
-            }
+            
         }
-        StartCoroutine(displayresponse());
+        else if(!displaystarted)
+        {
+            StartCoroutine(displayresponse());
+        }
     }
 
     void restartClick()
 	{
         gameend = false;
+        EndResponseList.Clear();
+        restart.gameObject.SetActive(false);
+        displaystarted = false;
+        score = 0;
 	}
 
-    void endGameclick()
-	{
-        gameend = true;
-	}
-
+    //displays responses at the end of the game
     IEnumerator displayresponse()
 	{
-        foreach(string res in EndResponseList)
+        displaystarted = true;
+        WaitForSeconds wait = new WaitForSeconds(3);
+        foreach (string res in EndResponseList)
 		{
             resdialog.text = res;
-            yield return new WaitForSeconds(5);
-		}
-        if(score > 0)
+            yield return wait;
+        }
+        if (score > 0)
 		{
             resdialog.text = goodtext;
 		}
@@ -99,16 +99,17 @@ public class SystemControl : MonoBehaviour
         restart.gameObject.SetActive(true);
 	}
 
-    public void CutTape(float length)
-    {
-        totaltapelength -= length;
-    }
+    public void finishgame()
+	{
+        gameend = true;
+	}
 
     public void changescore(int change)
     {
         score += change;
     }
 
+    //input objectname to add it to the list of stickied objects
     public void SticktoObj(string Objname)
     {
         //add to response at the end when sticking
