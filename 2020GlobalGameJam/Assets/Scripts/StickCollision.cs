@@ -68,7 +68,11 @@ public class StickCollision : MonoBehaviour
     IEnumerator WaitThenRespawn() //For dramatic pause and to let any particle effects play out.
     {
         yield return new WaitForSeconds(respawnDelay);
-        Respawn();
+        livesManager.ChangeLives(-1);
+        if (livesManager.moreThanZeroLives() == true)
+        {
+            Respawn();
+        }
     }
 
     private void Respawn()
@@ -87,6 +91,6 @@ public class StickCollision : MonoBehaviour
         {
             GetComponent<AirplaneFlight>().ResetPitchAngle();
         }
-        livesManager.ChangeLives(-1);
+        
     }
 }

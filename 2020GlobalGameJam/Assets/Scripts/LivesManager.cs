@@ -31,4 +31,15 @@ public class LivesManager : MonoBehaviour
             theSystemController.finishgame();
         }
     }
+
+    public bool moreThanZeroLives()
+    {
+        if (currentLives > 0)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 }
