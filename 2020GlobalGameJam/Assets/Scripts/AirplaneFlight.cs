@@ -38,15 +38,15 @@ public class AirplaneFlight : MonoBehaviour
     {
         if (stickCollision.stuck == false)
         {
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
             {
                 transform.Rotate(0, turnSpeed * Time.deltaTime, 0, Space.World);
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
             {
                 transform.Rotate(0, -1 * turnSpeed * Time.deltaTime, 0, Space.World);
             }
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
             {
                 if ((currentPitchAngle + (turnSpeed * Time.deltaTime)) <= upwardPitchMax)
                 {
@@ -54,7 +54,7 @@ public class AirplaneFlight : MonoBehaviour
                     currentPitchAngle += (turnSpeed * Time.deltaTime);
                 }
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
                 if ((currentPitchAngle - (turnSpeed * Time.deltaTime)) >= downwardPitchMax)
                 {
