@@ -30,12 +30,14 @@ public class SystemControl : MonoBehaviour
     Dictionary<string, string> responsesearch;
     List<string> EndResponseList;
     Boolean gameend = false;
-
+    Boolean displaystarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
         //transferring array stuff to dictionary for easy lookup
+        responsesearch = new Dictionary<string, string>();
+        EndResponseList = new List<string>();
         for (int x = 0; x < responselist.Length; x++)
         {
             responsesearch.Add(responselist[x].objname, responselist[x].response);
@@ -53,8 +55,9 @@ public class SystemControl : MonoBehaviour
     void Update()
     {
         //normal game loop
-        if(!gameend)
+        if (!gameend)
         {
+            displaystarted = false;
             restart.gameObject.SetActive(false);
             SticktoObj("Certificate");
             SticktoObj("Hole");
@@ -64,12 +67,17 @@ public class SystemControl : MonoBehaviour
                 gameend = true;
             }
         }
-        StartCoroutine(displayresponse());
+        else if(!displaystarted)
+        {
+            StartCoroutine(displayresponse());
+        }
     }
 
     void restartClick()
 	{
         gameend = false;
+        EndResponseList.Clear();
+        score = 0;
 	}
 
     void endGameclick()
@@ -79,12 +87,14 @@ public class SystemControl : MonoBehaviour
 
     IEnumerator displayresponse()
 	{
-        foreach(string res in EndResponseList)
+        displaystarted = true;
+        WaitForSeconds wait = new WaitForSeconds(3);
+        foreach (string res in EndResponseList)
 		{
             resdialog.text = res;
-            yield return new WaitForSeconds(5);
-		}
-        if(score > 0)
+            yield return wait;
+        }
+        if (score > 0)
 		{
             resdialog.text = goodtext;
 		}
@@ -99,6 +109,7 @@ public class SystemControl : MonoBehaviour
         restart.gameObject.SetActive(true);
 	}
 
+    //removes tape length
     public void CutTape(float length)
     {
         totaltapelength -= length;
@@ -109,6 +120,7 @@ public class SystemControl : MonoBehaviour
         score += change;
     }
 
+    //input objectname to add it to the list of stickied objects
     public void SticktoObj(string Objname)
     {
         //add to response at the end when sticking
