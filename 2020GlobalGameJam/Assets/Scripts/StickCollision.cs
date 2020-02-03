@@ -22,7 +22,8 @@ public class StickCollision : MonoBehaviour
     Rigidbody rb;
     [SerializeField]
     GameObject tapeModelPrefab;
-    
+    [SerializeField]
+    Animator animator;
 
     LivesManager livesManager;
     // Start is called before the first frame update
@@ -66,6 +67,8 @@ public class StickCollision : MonoBehaviour
 
     private void Stick()
     {
+        gameObject.GetComponent<AudioSource>().Play();
+        animator.SetBool("Hit", true);
         readyToStick = false;
         stuck = true;
         readyToUnstick = false;
@@ -103,5 +106,14 @@ public class StickCollision : MonoBehaviour
             GetComponent<AirplaneFlight>().ResetPitchAngle();
         }
         readyToUnstick = true;
+        animator.SetBool("Hit", false);
+        animator.SetBool("Respawn", true);
+        StartCoroutine(StopIt());
+    }
+
+    IEnumerator StopIt() //For dramatic pause and to let any particle effects play out.
+    {
+        yield return new WaitForSeconds(0.1f);
+        animator.SetBool("Respawn", false);
     }
 }

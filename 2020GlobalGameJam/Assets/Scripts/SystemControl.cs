@@ -29,12 +29,16 @@ public class SystemControl : MonoBehaviour
     public Button restart;
     Dictionary<string, string> responsesearch;
     List<string> EndResponseList;
-    Boolean gameend = false;
+    bool gameend = false;
+    bool displaying = false;
+    int displaynum = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        EndResponseList = new List<string>();
+        responsesearch = new Dictionary<string, string>();
         //transferring array stuff to dictionary for easy lookup
         for (int x = 0; x < responselist.Length; x++)
         {
@@ -56,35 +60,53 @@ public class SystemControl : MonoBehaviour
         }
         else
         {
-            StartCoroutine(displayresponse());
+            if (!displaying)
+            {
+                Debug.Log(goodtext + badtext + neutraltext);
+                if (score > 0)
+                {
+                    EndResponseList.Add(goodtext);
+                }
+                else if (score < 0)
+                {
+                    EndResponseList.Add(badtext);
+                }
+                else
+                {
+                    EndResponseList.Add(neutraltext);
+                }
+                displaying = true;
+                if (displaynum < EndResponseList.Count)
+                {
+                    resdialog.text = EndResponseList[displaynum];
+                }
+                else
+                {
+                    Debug.Log("quit time");
+                    restart.gameObject.SetActive(true);
+                    restartClick();
+                }
+            }
+            if(Input.GetKeyDown(KeyCode.Space))
+			{
+                displaynum++;
+                if (displaynum < EndResponseList.Count)
+                {
+                    resdialog.text = EndResponseList[displaynum];
+                }
+                else
+                {
+                    Debug.Log("quit time");
+                    restart.gameObject.SetActive(true);
+                    restartClick();
+                }
+            }
         }
     }
 
     void restartClick()
 	{
         SceneManager.LoadScene(scenename);
-	}
-    
-    IEnumerator displayresponse()
-	{
-        foreach(string res in EndResponseList)
-		{
-            resdialog.text = res;
-            yield return new WaitForSeconds(5);
-		}
-        if(score > 0)
-		{
-            resdialog.text = goodtext;
-		}
-        else if(score < 0)
-		{
-            resdialog.text = badtext;
-		}
-		else
-		{
-            resdialog.text = neutraltext;
-		}
-        restart.gameObject.SetActive(true);
 	}
     
     public void finishgame()
@@ -109,9 +131,4 @@ public class SystemControl : MonoBehaviour
             Debug.Log("Sticked object not in list!");
 		}
     }
-
-    public List<string> GetResponses()
-	{
-        return EndResponseList;
-	}
 }

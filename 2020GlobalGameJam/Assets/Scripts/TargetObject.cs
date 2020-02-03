@@ -8,6 +8,8 @@ public class TargetObject : MonoBehaviour
     string objectName;
     [SerializeField]
     int scoreValue;
+    [SerializeField]
+    GameObject particleBurst;
 
     SystemControl theSystemController;
 
@@ -26,6 +28,11 @@ public class TargetObject : MonoBehaviour
     public void IsHit()
     {
         Debug.Log("I am hit");
+        if (particleBurst != null)
+        {
+            GameObject newParticle = Instantiate(particleBurst, transform.position, Quaternion.identity);
+            Destroy(newParticle, 10);
+        }
         theSystemController.SticktoObj(objectName);
         theSystemController.changescore(scoreValue);
         gameObject.GetComponent<Collider>().enabled = false;
